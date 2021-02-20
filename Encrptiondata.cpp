@@ -16,6 +16,7 @@ void dencrypted(char str1[], int &s, int &k);
 void dbinary(double arrbi[][7], int &x1, char ch1[], int &k);
 int main()
 {
+   srand(time(0));
    system("CLS");
    char str1[100], arr[9], ch1[100];
    int shift, i, rseries = 2, x1, s, r, k = 0;
@@ -23,9 +24,9 @@ int main()
    system("CLS");
    cout << "Enter the string that you want to encrypt(max 50 words): ";
    cin.getline(str1, 100);
-   cout << "Enter the shift value(1-10): ";
-   cin >> shift;
-   cout << endl;
+   shift=rand()%9+1;
+   cout<<shift<<endl;
+   cout<< endl;
    encrypted(str1, shift);
    cout << endl;
    binary(str1, arrbi, x1);
