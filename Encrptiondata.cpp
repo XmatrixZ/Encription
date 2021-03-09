@@ -7,56 +7,80 @@
 #include <string.h>
 #include <math.h>
 using namespace std;
-void encrypted(char str1[], int shift);
-void variable(char arr[]);
-void imp1(char arr[], int s, int r);
-void readimp1(char arr[], int &s, int &r);
-void binary(char str1[], double arrbi[][7], int &x1);
-void dencrypted(char str1[], int &s, int &k);
-void dbinary(double arrbi[][7], int &x1, char ch1[], int &k);
+//Encryption Process
+void EncryptionCode(char str1[],double arrbi[][7],int &x1, int rseries,int shift,char arr[]);
+
+void encrypted(char str1[], int shift); //Encrypt the string by shifting
+void Specialvariable(char arr[]);//Special characters loaction allocation in the string
+void binary(char str1[], double arrbi[][7], int& x1); //String into Binary
+void SpecialValueKey(char arr[], int s, int r); // Assigning special values in succeeding locations of special characters
+
+
+
+//DeEncryption Process 
+void DencrytionCode(double arrb1[][7], int x1, char arr[]);
+
+void dencrypted(char str1[], int &s, int &k); //Converting encripted String  
+void dbinary(double arrbi[][7], int &x1, char ch1[], int &k); // binary back to string
+void ReadSpecialValueKey(char arr[], int& s, int& r); // Understanding the values Succeeding the special characters
+
 int main()
 {
    srand(time(0));
    system("CLS");
-   char str1[100], arr[9], ch1[100];
-   int shift, i, rseries = 2, x1, s, r, k = 0;
-   double arrbi[100][7];
+   char str1[100], arr[9];
+   int shift,rseries = rand()%9+1, x1;
+   double arrbi[100][7];//Stores the binary format of the string
    system("CLS");
    cout << "Enter the string that you want to encrypt(max 50 words): ";
    cin.getline(str1, 100);
-   shift=rand()%9+1;
+   shift=rand()%9+1; //Generates Random Shift value between 1-10
    cout<<shift<<endl;
    cout<< endl;
-   encrypted(str1, shift);
-   cout << endl;
-   binary(str1, arrbi, x1);
-   cout << "  ";
-   variable(arr);
-   imp1(arr, shift, rseries);
-   for (i = 0; i < 9; i++)
-   {
-      if (arr[i] < 10)
-         cout << int(arr[i]);
-      else
-         cout << arr[i];
-   }
-   cout << endl;
-   dbinary(arrbi, x1, ch1, k);
-   readimp1(arr, s, r);
-   dencrypted(ch1, s, k);
-   cout << " ";
-   imp1(arr, s, r);
-   for (i = 0; i < 9; i++)
-   {
-      if (arr[i] < 10)
-         cout << int(arr[i]);
-      else
-         cout << arr[i];
-   }
+   EncryptionCode(str1, arrbi, x1, rseries, shift,arr);
+   DencrytionCode(arrbi,x1,arr);
    getche();
    return 0;
 }
-void encrypted(char str1[], int shift)
+void EncryptionCode(char str1[], double arrbi[][7], int& x1, int rseries,int shift,char arr[])
+{
+    int i;
+    encrypted(str1, shift);
+    cout << endl;
+    binary(str1, arrbi, x1);
+    cout << "  ";
+    Specialvariable(arr);
+    SpecialValueKey(arr, shift, rseries);
+    for (i = 0; i < 9; i++) //Encrypted String print
+    {
+        if (arr[i] < 10)
+            cout << int(arr[i]);
+        else
+            cout << arr[i];
+    }
+    cout << endl;
+}
+
+
+void DencrytionCode(double arrb1[][7],int x1,char arr[])
+{
+    int i,s, r, k = 0;//s->shift value during Dencription r->rseries value during dEncryption k-> size of the String
+    char ch1[100];
+    dbinary(arrb1,x1,ch1,k);
+    ReadSpecialValueKey(arr, s, r);
+    dencrypted(ch1, s, k);
+    cout << " ";
+    SpecialValueKey(arr, s, r);
+
+    for (i = 0; i < 9; i++)
+    {
+        if (arr[i] < 10)
+            cout << int(arr[i]);
+        else
+            cout << arr[i];
+    }
+}
+void encrypted(char str1[], int shift) // Encrypt the String(Caesar cipher Concept)
 {
    int i = 0;
    char ch;
@@ -92,7 +116,7 @@ void encrypted(char str1[], int shift)
    cout << "The encrypted text is: ";
    cout << str1;
 }
-void dencrypted(char ch1[], int &s, int &k)
+void dencrypted(char ch1[], int &s, int &k) //Convert Encrypted String and Dencrypt it
 {
    int i = 0;
    char ch;
@@ -130,7 +154,7 @@ void dencrypted(char ch1[], int &s, int &k)
    cout << "The dencrypted text is: ";
    cout.write(ch1, k);
 }
-void variable(char arr[])
+void Specialvariable(char arr[])//Special characters loaction allocation in the string
 {
    int l, i;
    l = rand()%3;
@@ -180,7 +204,7 @@ void variable(char arr[])
       }
    }
 }
-void imp1(char arr[], int s, int r)
+void SpecialValueKey(char arr[], int s, int r) // Assigning special values in succeeding locations of special characters
 {
    srand(time(0));
    int i;
@@ -197,7 +221,7 @@ void imp1(char arr[], int s, int r)
          arr[i + 1] = rand()%10;
    }
 }
-void readimp1(char arr[], int &s, int &r)
+void ReadSpecialValueKey(char arr[], int &s, int &r) // Understanding the values Succeeding the special characters
 {
    int i;
    for (i = 0; i < 9; i++)
@@ -212,7 +236,7 @@ void readimp1(char arr[], int &s, int &r)
       }
    }
 }
-void binary(char ch[], double arrbi[][7], int &x1)
+void binary(char ch[], double arrbi[][7], int &x1) // Convert the String into binary format
 {
    int num, r, j;
    x1 = strlen(ch);
@@ -234,7 +258,7 @@ void binary(char ch[], double arrbi[][7], int &x1)
       } while (num != 0);
    }
    cout << endl;
-   cout << "In binary the code is:";
+   cout << "In binary Encryption code is:";
    for (int i = 0; i < x1; i++)
    {
       for (j = 0; j < 7; j++)
@@ -242,7 +266,7 @@ void binary(char ch[], double arrbi[][7], int &x1)
       cout << " ";
    }
 }
-void dbinary(double arrbi[][7], int &x1, char ch1[], int &k)
+void dbinary(double arrbi[][7], int &x1, char ch1[], int &k) //Convert the binary code to the String
 {
    int sum;
    for (int i = 0; i < x1; i++)
