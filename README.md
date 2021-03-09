@@ -1,6 +1,7 @@
 Data# Encription
 Converts Messages into encrypted code and also decipher the codes.
-Pocess behind the working of the Encryption
+
+Process behind the working of the Encryption.
 1. Creating random shift values and creating an Encrypted text.
 3. This shfit value along with size of the array is stored in a String key which is has combination characters and variables
 4. This inner character values comination forms (inner)keys which stores variable(key) and value pairs which are randomised in the key and along with a lot trash key value pairs
